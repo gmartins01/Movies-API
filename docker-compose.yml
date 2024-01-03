@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  movies-application:
+    container_name: movies-application
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+  movie-tests:
+    container_name: movies-tests
+    build:
+      context: .
+    command: mvn test
