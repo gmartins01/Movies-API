@@ -25,9 +25,9 @@ class MovieRepositoryTest {
     EntityManager entityManager;
 
     @Test
-    @DisplayName("Should return movies successfully from database")
+    @DisplayName("Test to get movies filtered by launch date")
     void findByLaunchDateBetweenCase1() {
-        MovieDTO movieDTO = new MovieDTO("Teste", LocalDate.of(2023,1,1),5,2222.2);
+        MovieDTO movieDTO = new MovieDTO("Test", LocalDate.of(2023,1,1),5,2222.2);
         this.createMovie(movieDTO);
 
         Optional<List<Movie>> result = Optional.ofNullable(this.movieRepository.findByLaunchDateBetween(LocalDate.of(2022, 1, 1), LocalDate.of(2024, 1, 1)));
@@ -38,7 +38,7 @@ class MovieRepositoryTest {
 
 
     @Test
-    @DisplayName("Should not return movies from database if there is none")
+    @DisplayName("Test to get movies filtered by launch date when there is no movies")
     void findByLaunchDateBetweenCase2() {
         Optional<List<Movie>> result = Optional.ofNullable(this.movieRepository.findByLaunchDateBetween(LocalDate.of(2022, 1, 1), LocalDate.of(2024, 1, 1)));
 

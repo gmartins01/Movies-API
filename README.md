@@ -1,10 +1,16 @@
 # Movies Management Application
 
 ## Table of Contents
+- [Requirements](#requirements)
 - [Running the application](#running-the-application)
     - [Docker](#run-with-docker)
 - [Database](#database)
 - [Usage](#usage)
+
+## Requirements
+For building and running the application you need:
+
+- [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
 ## Running the application
 
@@ -31,9 +37,9 @@ It is recommended to use tools like Postman to interact with the API.
 POST /movies
 
 {
-  "title":"Spider-Man",
-  "launchDate":"2002-06-21",
-  "rank":9,
+  "title":"Interstellar",
+  "launchDate":"2014-11-06",
+  "rank":10,
   "revenue":200000000
 }
 
@@ -73,8 +79,6 @@ To update a movie, include only the values to be updated in the request body.
 PUT /movies/{movieId}
 
 {
-  "title":"Spider-Man 2",
-  "launchDate":"2004-07-15",
   "revenue":500000000
 }
 

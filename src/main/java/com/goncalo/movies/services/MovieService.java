@@ -20,14 +20,64 @@ public class MovieService {
     @Autowired
     private MovieRepository movieRepository;
 
-    protected Boolean validateMovie(@NotNull Movie movie) {
+
+    public List<Movie> getAllMovies(){
+        return movieRepository.findAll();
+    }
+
+    public Movie createMovie(MovieDTO data){
+        Movie newMovie = new Movie(data);
+        if (validateMovie(newMovie))
+            movieRepository.save(newMovie);
+        return newMovie;
+    }
+
+    public Movie getMovieById(Long id) {
+        return movieRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Id not found: "+id));
+    }
+
+    public Movie updateMovie(Long movieId, MovieDTO data) {
+        Optional<Movie> optionalMovie = movieRepository.findById(movieId);
+
+        return optionalMovie.map(movie -> {
+            updateIfNotNull(data.title(), movie::setTitle);
+            updateIfNotNull(data.launchDate(), movie::setLaunchDate);
+            updateIfNotZero(data.rank(), movie::setRank);
+            updateIfNotZero(data.revenue(), movie::setRevenue);
+
+            if (validateMovie(movie)) {
+                movieRepository.save(movie);
+            }
+            return movie;
+        }).orElseThrow(() -> new EntityNotFoundException("Id not found: " + movieId));
+    }
+
+    public void deleteMovie(Long id){
+        Optional<Movie> optionalMovie = movieRepository.findById(id);
+
+        if(optionalMovie.isPresent()){
+            Movie movie = optionalMovie.get();
+
+            movieRepository.delete(movie);
+
+        }else{
+            throw new EntityNotFoundException("Id not found: "+id);
+        }
+    }
+
+    public List<Movie> getMoviesFilteredByLaunchDate(LocalDate startDate, LocalDate endDate) {
+        return movieRepository.findByLaunchDateBetween(startDate, endDate);
+    }
+
+
+    protected Boolean validateMovie(@NotNull Object object) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Movie>> violations = validator.validate(movie);
+        Set<ConstraintViolation<Object>> violations = validator.validate(object);
         if (!violations.isEmpty()) {
 
             StringBuilder errorMessage = new StringBuilder();
-            for (ConstraintViolation<Movie> violation : violations) {
+            for (ConstraintViolation<Object> violation : violations) {
                 errorMessage.append(violation.getMessage()).append(";");
             }
             throw new ValidationException(errorMessage.toString());
@@ -52,54 +102,6 @@ public class MovieService {
         if (value != 0.0) {
             updateFunction.accept(value);
         }
-    }
-
-    public List<Movie> getAllMovies(){
-        return this.movieRepository.findAll();
-    }
-
-    public Movie createMovie(MovieDTO data){
-        Movie newMovie = new Movie(data);
-        if (validateMovie(newMovie))
-            this.movieRepository.save(newMovie);
-        return newMovie;
-    }
-
-    public Movie getMovieById(Long id) {
-        return this.movieRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Id not found: "+id));
-    }
-
-    public Movie updateMovie(Long movieId, MovieDTO data) {
-        Optional<Movie> optionalMovie = this.movieRepository.findById(movieId);
-
-        return optionalMovie.map(movie -> {
-            updateIfNotNull(data.title(), movie::setTitle);
-            updateIfNotNull(data.launchDate(), movie::setLaunchDate);
-            updateIfNotZero(data.rank(), movie::setRank);
-            updateIfNotZero(data.revenue(), movie::setRevenue);
-
-            if (validateMovie(movie)) {
-                this.movieRepository.save(movie);
-            }
-            return movie;
-        }).orElseThrow(() -> new EntityNotFoundException("Id not found: " + movieId));
-    }
-
-    public void deleteMovie(Long id){
-        Optional<Movie> optionalMovie = this.movieRepository.findById(id);
-
-        if(optionalMovie.isPresent()){
-            Movie movie = optionalMovie.get();
-
-            this.movieRepository.delete(movie);
-
-        }else{
-            throw new EntityNotFoundException("Id not found: "+id);
-        }
-    }
-
-    public List<Movie> getMoviesFilteredByLaunchDate(LocalDate startDate, LocalDate endDate) {
-        return this.movieRepository.findByLaunchDateBetween(startDate, endDate);
     }
 
 }

@@ -20,9 +20,9 @@ public class LoadDatabase {
     public ApplicationRunner initDatabase(MovieRepository movieRepository){
         return args -> {
             List<Movie> movies = List.of(
-                    new Movie(1L,"Teste", LocalDate.of(2023,1,1),4,44.44),
-                    new Movie(2L,"Teste1", LocalDate.of(2021,11,1),5,44.44),
-                    new Movie(3L,"Teste2", LocalDate.of(2022,12,13),7,44.44)
+                    new Movie(1L,"Spider-Man", LocalDate.of(2023,7,1),10,8484884844.44),
+                    new Movie(2L,"Spider-Man 2", LocalDate.of(2004,6,30),9,84848848440.44),
+                    new Movie(3L,"Spider-Man 3", LocalDate.of(2022,12,13),8,8484884844.44)
             );
 
             movieRepository.saveAll(movies);

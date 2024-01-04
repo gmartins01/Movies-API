@@ -23,7 +23,8 @@ public class Movie {
     private String title;
 
     @Column(name = "launch_date", nullable = false)
-    @PastOrPresent(message = "Date should not be in the future")
+    @PastOrPresent(message = "Launch date should not be in the future")
+    @NotNull(message = "Launch date should not be null")
     private LocalDate launchDate;
 
     @Column(name = "rank", nullable = false)
