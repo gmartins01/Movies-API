@@ -6,7 +6,7 @@
     - [Docker](#run-with-docker)
 - [Database](#database)
 - [Usage](#usage)
-
+- [Tests](#tests)
 ## Requirements
 For building and running the application you need:
 
@@ -20,7 +20,8 @@ There are several ways to run a Spring Boot application on your local machine. O
 
 * Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 * Create the necessary Docker Images and Containers by running the following command in the project's root folder:
-```
+
+```shell
 docker compose up --build -d
 ```
 
@@ -30,7 +31,7 @@ docker compose up --build -d
   - User Name: `sa`
 
 ## Usage
-It is recommended to use tools like Postman to interact with the API.
+It is recommended to use tools like [Postman](https://www.postman.com/) to interact with the API. The API is available at `http://localhost:8080/api`
 
 #### Create a movie
 ```
@@ -74,11 +75,13 @@ Content: Filtered movies
 ```
 
 #### Update a Movie
-To update a movie, include only the values to be updated in the request body.
 ```
 PUT /movies/{movieId}
 
 {
+  "title":"Interstellar",
+  "launchDate":"2014-11-06",
+  "rank":9,
   "revenue":500000000
 }
 
@@ -92,3 +95,13 @@ DELETE /movies/{movieId}
 
 Response: HTTP 200
 ```
+
+## Tests
+
+To view the collective test results, utilize Docker Compose:
+
+`````shell
+docker-compose run movie-tests
+`````
+
+Alternatively, you can individually view and execute the tests using your preferred IDE by running them from the `test` package.

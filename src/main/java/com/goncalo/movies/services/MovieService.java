@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.DoubleConsumer;
-import java.util.function.IntConsumer;
+
 
 @Service
 public class MovieService {
@@ -40,10 +38,10 @@ public class MovieService {
         Optional<Movie> optionalMovie = movieRepository.findById(movieId);
 
         return optionalMovie.map(movie -> {
-            updateIfNotNull(data.title(), movie::setTitle);
-            updateIfNotNull(data.launchDate(), movie::setLaunchDate);
-            updateIfNotZero(data.rank(), movie::setRank);
-            updateIfNotZero(data.revenue(), movie::setRevenue);
+            movie.setTitle(data.title());
+            movie.setLaunchDate(data.launchDate());
+            movie.setRank(data.rank());
+            movie.setRevenue(data.revenue());
 
             if (validateMovie(movie)) {
                 movieRepository.save(movie);
@@ -86,22 +84,5 @@ public class MovieService {
         return true;
     }
 
-    private <T> void updateIfNotNull(T value, Consumer<T> updateFunction) {
-        if (Objects.nonNull(value)) {
-            updateFunction.accept(value);
-        }
-    }
-
-    private void updateIfNotZero(int value, IntConsumer updateFunction) {
-        if (value != 0) {
-            updateFunction.accept(value);
-        }
-    }
-
-    private void updateIfNotZero(double value, DoubleConsumer updateFunction) {
-        if (value != 0.0) {
-            updateFunction.accept(value);
-        }
-    }
 
 }

@@ -48,7 +48,6 @@ class MovieServiceTest {
     }
 
 
-
     @Test
     @DisplayName("Test to get validation errors")
     void validateMovieCase2() {
@@ -80,6 +79,24 @@ class MovieServiceTest {
         assertThrows(ValidationException.class, () -> movieService.createMovie(movieDTO));
     }
 
+    @Test
+    @DisplayName("Test to get all movies")
+    public void getAllMovies() {
+        List<Movie> movies = new ArrayList<>();
+        movies.add(new Movie(1L, "Movie 1", LocalDate.of(2001, 1, 1),
+                1, 11.00));
+        movies.add(new Movie(2L, "Movie 2", LocalDate.of(2002, 2, 2),
+                3, 22.00));
+        movies.add(new Movie(3L, "Movie 3", LocalDate.of(2003, 3, 3),
+                10,33.00));
+
+        when(movieRepository.findAll()).thenReturn(movies);
+
+        List<Movie> result = movieService.getAllMovies();
+
+        assertNotNull(result);
+        assertEquals(movies.size(), result.size());
+    }
 
     @Test
     @DisplayName("Test to get a movie by its Id")
