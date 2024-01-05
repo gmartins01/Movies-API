@@ -73,7 +73,6 @@ public class MovieService {
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<Object>> violations = validator.validate(object);
         if (!violations.isEmpty()) {
-
             StringBuilder errorMessage = new StringBuilder();
             for (ConstraintViolation<Object> violation : violations) {
                 errorMessage.append(violation.getMessage()).append(";");

@@ -10,7 +10,7 @@
 ## Requirements
 For building and running the application you need:
 
-- [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+- [JDK 17 or newer](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
 ## Running the application
 
@@ -67,6 +67,8 @@ Content: Movie requested
 ```
 
 Filter movies by their launch date within a specified range. The date format should be YYYY-MM-DD.
+For example, to get the movies between 2021-01-01 and 2023-12-31: `GET /movies/filter?startDate=2021-01-01&endDate=2023-12-31`
+
 ```
 GET /movies/filter?startDate={start_date}&endDate={end_date}
 

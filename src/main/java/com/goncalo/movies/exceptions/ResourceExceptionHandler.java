@@ -36,4 +36,15 @@ public class ResourceExceptionHandler {
         return ResponseEntity.badRequest().body(err);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<StandardError> generalException(Exception e, HttpServletRequest request){
+        StandardError err = new StandardError();
+        err.setTimestamp(Instant.now());
+        err.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        err.setError("Internal Server Error");
+        err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
+        return ResponseEntity.badRequest().body(err);
+    }
+
 }

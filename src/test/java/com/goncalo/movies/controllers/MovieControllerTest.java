@@ -182,7 +182,6 @@ class MovieControllerTest {
         ResultActions response = mockMvc.perform(get("/api/movies/filter?startDate=2003-01-01&endDate=2024-12-31")
                 .contentType(MediaType.APPLICATION_JSON));
 
-
         response.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()",CoreMatchers.is(filteredMovies.size())));
     }
@@ -197,7 +196,6 @@ class MovieControllerTest {
 
         ResultActions response = mockMvc.perform(get("/api/movies/filter?startDate=2003-01-01&endDate=2024-12-31")
                 .contentType(MediaType.APPLICATION_JSON));
-
 
         response.andExpect(MockMvcResultMatchers.status().isNoContent());
     }
