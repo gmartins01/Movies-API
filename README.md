@@ -103,7 +103,7 @@ Response: HTTP 200
 To view the collective test results, utilize Docker Compose:
 
 `````shell
-docker-compose run movie-tests
+docker compose run movie-tests
 `````
 
 Alternatively, you can individually view and execute the tests using your preferred IDE by running them from the `test` package.
